@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向七年级数学教师的证据驱动学情分析工作台：查看学生作答证据、班级共性问题、个性化学习建议与数据边界。">
+  <meta name="theme-color" content="#285e48">
+  <meta name="color-scheme" content="light">
+  <title>智慧学伴 · 看见学习的每一步</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#overview" aria-label="智慧学伴首页"><span class="brand-mark">学</span><span>智慧学伴<small>LEARNING COMPANION</small></span></a>
+    <div class="workspace-label">七年级数学 · 教师工作台</div>
+    <nav aria-label="主要导航">
+      <button data-page="overview" class="nav-item active"><span class="nav-symbol">▦</span>学情总览</button>
+      <button data-page="cases" class="nav-item"><span class="nav-symbol">◎</span>学生与典型案例<span class="nav-count" id="case-count">3</span></button>
+      <button data-page="group" class="nav-item"><span class="nav-symbol">◈</span>班级与对比</button>
+      <button data-page="verify" class="nav-item"><span class="nav-symbol">✓</span>结果核对</button>
+      <button data-page="curriculum" class="nav-item"><span class="nav-symbol">◇</span>学习内容与要求</button>
+      <button data-page="plans" class="nav-item"><span class="nav-symbol">↗</span>个性化学习建议</button>
+      <button data-page="adjust" class="nav-item"><span class="nav-symbol">⟲</span>调整与反馈<span class="nav-count" id="version-count">v0</span></button>
+      <button data-page="library" class="nav-item"><span class="nav-symbol">▤</span>题目与学习材料</button>
+      <button data-page="quality" class="nav-item"><span class="nav-symbol">⌕</span>数据质量与边界</button>
+    </nav>
+    <div class="sidebar-bottom"><div class="local-status"><span class="status-dot"></span>本地证据驱动引擎</div><p>让判断有依据<br>让建议可实施</p><small>模拟数据 · 教师复核</small></div>
+  </aside>
+  <div class="app-shell">
+    <header class="topbar"><div><span class="breadcrumb">教师工作台</span><span class="breadcrumb-divider">/</span><strong id="page-label">学情总览</strong></div><div class="top-actions"><span id="dataset-badge" class="badge neutral">赛事公开模拟数据</span><button class="badge" id="version-badge" data-page="adjust" title="查看调整与版本记录">v0 基线</button><button class="badge" id="share-button" title="复制当前页面与筛选条件的链接">复制链接</button><button class="button small" id="import-button">导入评测 CSV</button><button class="avatar" title="本地教师工作台">师</button></div></header>
+    <main id="main" tabindex="-1"></main>
+    <footer>依据真实课程材料与模拟作答记录 · 不是学生能力的终局判断 · 不自动改分、不上传数据<br><span class="shortcut-hint">快捷键：Alt+1–9 切换页面 · [ / ] 上一位／下一位学生 · / 搜索材料</span></footer>
+  </div>
+  <button class="agent-fab" id="agent-toggle"><span class="agent-icon">✧</span>问智慧学伴<span>↗</span></button>
+  <dialog id="agent-dialog" class="agent-dialog"><div class="agent-header"><div><strong>智慧学伴</strong><small>检索记录 → 分析证据 → 建议与边界</small></div><button class="icon-button" id="agent-close" aria-label="关闭学伴">×</button></div><div id="agent-messages" aria-live="polite"><div class="chat-message assistant">你好，我可以帮你查学生的实际作答、分析班级共性问题，或生成有材料出处的学习建议。<br><small>当前为本地规则与证据检索原型，未接入通用大模型。</small></div></div><div class="quick-questions"><button data-ask="分析D04的整式学习，并给出建议">D04如何巩固整式？</button><button data-ask="比较两个班的共性问题">两个班的共性问题</button><button data-ask="D17的不等式掌握情况如何">记录不足怎样处理？</button><button data-ask="D04整式建议的依据是什么？">建议依据是什么？</button><button data-ask="最近的调整改变了什么？">最近的调整改变了什么？</button></div><form id="agent-form"><label class="sr-only" for="agent-input">输入学生、题号或班级问题</label><textarea id="agent-input" placeholder="例如：D01在Q043哪一步出错？" rows="2" required></textarea><button type="submit" class="button primary">发送 ↗</button></form></dialog>
+  <dialog id="evidence-dialog" class="evidence-dialog"><div class="dialog-header"><strong id="evidence-title">作答证据</strong><button class="icon-button" id="evidence-close" aria-label="关闭证据">×</button></div><div id="evidence-content"></div></dialog>
+  <dialog id="import-dialog" class="import-dialog"><div class="dialog-header"><strong>导入独立评测数据</strong><button class="icon-button" id="import-close" aria-label="关闭导入">×</button></div><p>选择结构一致的5个 CSV：课程要求、题目与材料、模拟学生、测验节点、作答记录。可同时选择字段说明。只替换当前浏览器会话，不覆盖原件，不上传。</p><label class="file-drop"><input id="csv-files" type="file" accept=".csv" multiple>选择 CSV 文件（UTF-8）</label><div id="import-result" aria-live="polite"></div><div class="notice">仅支持CSV导入；Excel数据请使用资料包内结构一致的CSV。教材出处仍使用已提供的课程材料，不为陌生题目编造映射。</div><button class="button" id="restore-button">恢复赛事演示数据</button></dialog>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="engine.js"></script>
+  <script src="data.js"></script>
+  <script src="curriculum.js"></script>
+  <script src="demo-supplement.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
